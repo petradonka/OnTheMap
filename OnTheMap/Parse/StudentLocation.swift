@@ -19,42 +19,42 @@ struct StudentLocation {
     let longitude: Double
 
     init?(json: [String:AnyObject]) {
-        guard let parseId = json[ParseConfig.StudentLocation.FieldNames.objectId] as? String else {
+        guard let parseId = json[ParseConfig.StudentLocation.JSONProperties.objectId] as? String else {
             print("could not parse objectId", json)
             return nil
         }
 
-        guard let uniqueKey = json[ParseConfig.StudentLocation.FieldNames.uniqueKey] as? String else {
+        guard let uniqueKey = json[ParseConfig.StudentLocation.JSONProperties.uniqueKey] as? String else {
             print("could not parse uniqueKey", json)
             return nil
         }
 
-        guard let firstName = json[ParseConfig.StudentLocation.FieldNames.firstName] as? String else {
+        guard let firstName = json[ParseConfig.StudentLocation.JSONProperties.firstName] as? String else {
             print("could not parse firstname", json)
             return nil
         }
 
-        guard let lastName = json[ParseConfig.StudentLocation.FieldNames.lastName] as? String else {
+        guard let lastName = json[ParseConfig.StudentLocation.JSONProperties.lastName] as? String else {
             print("could not parse lastname", json)
             return nil
         }
 
-        guard let mapString = json[ParseConfig.StudentLocation.FieldNames.mapString] as? String else {
+        guard let mapString = json[ParseConfig.StudentLocation.JSONProperties.mapString] as? String else {
             print("could not parse mapstring", json)
             return nil
         }
 
-        guard let mediaURL = json[ParseConfig.StudentLocation.FieldNames.mediaURL] as? String else {
+        guard let mediaURL = json[ParseConfig.StudentLocation.JSONProperties.mediaURL] as? String else {
             print("could not parse mediaurl", json)
             return nil
         }
 
-        guard let latitude = json[ParseConfig.StudentLocation.FieldNames.latitude] as? Double else {
+        guard let latitude = json[ParseConfig.StudentLocation.JSONProperties.latitude] as? Double else {
             print("could not parse latitude", json)
             return nil
         }
 
-        guard let longitude = json[ParseConfig.StudentLocation.FieldNames.longitude] as? Double else {
+        guard let longitude = json[ParseConfig.StudentLocation.JSONProperties.longitude] as? Double else {
             print("could not parse longitude", json)
             return nil
         }
@@ -71,13 +71,13 @@ struct StudentLocation {
 
     func toJSON() -> [String : Any] {
         return [
-            ParseConfig.StudentLocation.FieldNames.uniqueKey: udacityUserId,
-            ParseConfig.StudentLocation.FieldNames.firstName: firstName,
-            ParseConfig.StudentLocation.FieldNames.lastName: lastName,
-            ParseConfig.StudentLocation.FieldNames.mapString: mapString,
-            ParseConfig.StudentLocation.FieldNames.mediaURL: mediaURL,
-            ParseConfig.StudentLocation.FieldNames.latitude: latitude,
-            ParseConfig.StudentLocation.FieldNames.longitude: longitude
+            ParseConfig.StudentLocation.JSONProperties.uniqueKey: udacityUserId,
+            ParseConfig.StudentLocation.JSONProperties.firstName: firstName,
+            ParseConfig.StudentLocation.JSONProperties.lastName: lastName,
+            ParseConfig.StudentLocation.JSONProperties.mapString: mapString,
+            ParseConfig.StudentLocation.JSONProperties.mediaURL: mediaURL,
+            ParseConfig.StudentLocation.JSONProperties.latitude: latitude,
+            ParseConfig.StudentLocation.JSONProperties.longitude: longitude
             ] as [String : Any]
     }
 }
@@ -93,7 +93,7 @@ extension StudentLocation {
             ]
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName, withParams: queryParams) {
-            ParseClient.get(url: url, completionHandler: { jsonData in
+            ParseClient.get(url: url, completion: { jsonData in
                 guard let json = jsonData as? [String : AnyObject],
                     let results = json["results"] as? [[String : AnyObject]] else {
                         print("could not parse data")
@@ -115,11 +115,11 @@ extension StudentLocation {
 
     static func studentLocation(forUserId id: String, completion: @escaping (StudentLocation?) -> Void) {
         let queryParams = [
-            "where": "{\"\(ParseConfig.StudentLocation.FieldNames.uniqueKey)\":\"\(id)\"}"
+            "where": "{\"\(ParseConfig.StudentLocation.JSONProperties.uniqueKey)\":\"\(id)\"}"
         ]
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName, withParams: queryParams) {
-            ParseClient.get(url: url, completionHandler: { jsonData in
+            ParseClient.get(url: url, completion: { jsonData in
                 guard let json = jsonData as? [String : AnyObject],
                     let results = json["results"] as? [[String : AnyObject]] else {
                         print("could not parse data")
@@ -153,10 +153,10 @@ extension StudentLocation {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName) {
-            ParseClient.post(url: url, body: body, completionHandler: { jsonData in
+            ParseClient.post(url: url, body: body, completion: { jsonData in
                 guard let json = jsonData as? [String : String],
-                    json[ParseConfig.StudentLocation.FieldNames.objectId] != nil,
-                    json[ParseConfig.StudentLocation.FieldNames.createdAt] != nil else {
+                    json[ParseConfig.StudentLocation.JSONProperties.objectId] != nil,
+                    json[ParseConfig.StudentLocation.JSONProperties.createdAt] != nil else {
                         print("something went wrong...")
                         return
                 }
@@ -174,9 +174,9 @@ extension StudentLocation {
             newUrl?.path.append("/\(parseId)")
 
             if let newUrl = newUrl?.url {
-                ParseClient.put(url: newUrl, body: body, completionHandler: { jsonData in
+                ParseClient.put(url: newUrl, body: body, completion: { jsonData in
                     guard let json = jsonData as? [String : String],
-                        json[ParseConfig.StudentLocation.FieldNames.updatedAt] != nil else {
+                        json[ParseConfig.StudentLocation.JSONProperties.updatedAt] != nil else {
                             print("something went wrong...")
                             return
                     }

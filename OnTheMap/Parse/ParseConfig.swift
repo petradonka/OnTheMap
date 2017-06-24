@@ -19,7 +19,7 @@ struct ParseConfig {
     struct StudentLocation {
         static let ClassName = "StudentLocation"
 
-        struct FieldNames {
+        struct JSONProperties {
             static let objectId = "objectId"
             static let uniqueKey = "uniqueKey"
             static let firstName = "firstName"

@@ -9,19 +9,19 @@
 import Foundation
 
 struct ParseClient {
-    static func get(url: URL, completionHandler: @escaping (Any?) -> Void) {
-        request(method: "GET", url: url, jsonBody: nil, completionHandler: completionHandler)
+    static func get(url: URL, completion: @escaping (Any?) -> Void) {
+        request(method: "GET", url: url, jsonBody: nil, completion: completion)
     }
 
-    static func post(url: URL, body: Any?, completionHandler: @escaping (Any?) -> Void) {
-        request(method: "POST", url: url, jsonBody: body, completionHandler: completionHandler)
+    static func post(url: URL, body: Any?, completion: @escaping (Any?) -> Void) {
+        request(method: "POST", url: url, jsonBody: body, completion: completion)
     }
 
-    static func put(url: URL, body: Any?, completionHandler: @escaping (Any?) -> Void) {
-        request(method: "PUT", url: url, jsonBody: body, completionHandler: completionHandler)
+    static func put(url: URL, body: Any?, completion: @escaping (Any?) -> Void) {
+        request(method: "PUT", url: url, jsonBody: body, completion: completion)
     }
 
-    static func request(method: String, url: URL, jsonBody: Any?, completionHandler: @escaping (Any?) -> Void) {
+    static func request(method: String, url: URL, jsonBody: Any?, completion: @escaping (Any?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = method;
         request.addValue(ParseConfig.ApplicationId, forHTTPHeaderField: ParseConfig.Headers.ApplicationId)
@@ -53,7 +53,7 @@ struct ParseClient {
                 return
             }
 
-            completionHandler(jsonData)
+            completion(jsonData)
         }).resume()
     }
 
