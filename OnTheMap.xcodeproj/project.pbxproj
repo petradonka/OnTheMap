@@ -41,6 +41,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F2B1F561EFEC83C0025D327 /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				6F20E0C21EFE78410066FFE5 /* ParseClient.swift */,
+				6F28F3A21EFE87C200E2CAF5 /* StudentLocation.swift */,
+				6F20E0C41EFE7F020066FFE5 /* ParseConfig.swift */,
+			);
+			path = Parse;
+			sourceTree = "<group>";
+		};
 		6FB8F3621EF86A9D008888F6 = {
 			isa = PBXGroup;
 			children = (
@@ -66,9 +76,7 @@
 				6FB8F3751EF86A9D008888F6 /* Assets.xcassets */,
 				6FB8F3771EF86A9D008888F6 /* LaunchScreen.storyboard */,
 				6FB8F37A1EF86A9D008888F6 /* Info.plist */,
-				6F20E0C21EFE78410066FFE5 /* ParseClient.swift */,
-				6F28F3A21EFE87C200E2CAF5 /* StudentLocation.swift */,
-				6F20E0C41EFE7F020066FFE5 /* ParseConfig.swift */,
+				6F2B1F561EFEC83C0025D327 /* Parse */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
