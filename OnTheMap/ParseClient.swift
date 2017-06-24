@@ -9,25 +9,52 @@
 import Foundation
 
 struct ParseClient {
-    static func get(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        request(method: "GET", url: url, completionHandler: completionHandler)
+    static func get(url: URL, completionHandler: @escaping (Any?) -> Void) {
+        request(method: "GET", url: url, jsonBody: nil, completionHandler: completionHandler)
     }
 
-    static func post(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        request(method: "POST", url: url, completionHandler: completionHandler)
+    static func post(url: URL, body: Any?, completionHandler: @escaping (Any?) -> Void) {
+        request(method: "POST", url: url, jsonBody: body, completionHandler: completionHandler)
     }
 
-    static func put(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        request(method: "PUT", url: url, completionHandler: completionHandler)
+    static func put(url: URL, body: Any?, completionHandler: @escaping (Any?) -> Void) {
+        request(method: "PUT", url: url, jsonBody: body, completionHandler: completionHandler)
     }
 
-    static func request(method: String, url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    static func request(method: String, url: URL, jsonBody: Any?, completionHandler: @escaping (Any?) -> Void) {
         var request = URLRequest(url: url)
+        request.httpMethod = method;
         request.addValue(ParseConfig.ApplicationId, forHTTPHeaderField: ParseConfig.Headers.ApplicationId)
         request.addValue(ParseConfig.ApiKey, forHTTPHeaderField: ParseConfig.Headers.ApiKey)
 
+        if let json = jsonBody,
+            let body = try? JSONSerialization.data(withJSONObject: json, options: []) {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body
+        }
+
         let session = URLSession.shared
-        session.dataTask(with: request, completionHandler: completionHandler).resume()
+        session.dataTask(with: request, completionHandler: { (data, response, error) in
+            guard error == nil,
+                response != nil,
+                let data = data else {
+                    print("something went wrong!")
+                    if let error = error {
+                        print(error)
+                    }
+                    return
+            }
+
+            guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
+                print("could not parse json")
+                if let responseString = String.init(data: data, encoding: .utf8) {
+                    print(responseString)
+                }
+                return
+            }
+
+            completionHandler(jsonData)
+        }).resume()
     }
 
     static func urlForClass(_ className: String) -> URL? {
@@ -36,7 +63,7 @@ struct ParseClient {
         return url?.url
     }
 
-    static func urlForClass(_ className: String, withParams params: [String:String]) -> URL? {
+    static func urlForClass(_ className: String, withParams params: [String : String]) -> URL? {
         var url = URLComponents.init(string: ParseConfig.ApiBaseURL)
         url?.path.append("/\(className)")
         url?.queryItems = []

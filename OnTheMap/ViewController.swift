@@ -19,7 +19,19 @@ class ViewController: UIViewController {
 
             StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId, completion: { (studentLocation) in
                 if let studentLocation = studentLocation {
-                    print (studentLocation)
+                    print(studentLocation)
+
+                    studentLocation.send {
+                        print("sent!")
+                    }
+
+                    studentLocation.update(existingLocation: studentLocation, completion: {
+                        print("updated!")
+                    })
+
+                    studentLocation.save {
+                        print("saved!")
+                    }
                 }
             })
         }
