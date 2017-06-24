@@ -24,12 +24,12 @@ struct UdacityConfig {
 
         struct JSONProperties {
             static let account = "account"
-            static let key = "key"
+            static let key = "key" // User ID
             static let registered = "registered"
 
             static let session = "session"
             static let expiration = "expiration"
-            static let id = "id"
+            static let id = "id" // Session ID
         }
     }
 
@@ -40,6 +40,7 @@ struct UdacityConfig {
             static let user = "user"
             static let firstName = "first_name"
             static let lastName = "last_name"
+            static let key = "key" // User ID
         }
     }
 }

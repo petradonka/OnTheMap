@@ -39,8 +39,8 @@ class ViewController: UIViewController {
         Session.session(forUsername: "donkapetra@gmail.com", andPassword: "3ampiart120") { session in
             print(session)
 
-            session.delete {
-                print("logged out!")
+            User.user(withSession: session) { user in
+                print(user)
             }
         }
     }

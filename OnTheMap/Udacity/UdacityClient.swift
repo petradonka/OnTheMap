@@ -9,6 +9,10 @@
 import Foundation
 
 struct UdacityClient {
+    static func get(url: URL, completion: @escaping (Any?) -> Void) {
+        request(method: "GET", url: url, additionalHeaders: nil, jsonBody: nil, completion: completion)
+    }
+
     static func post(url: URL, body: Any?, completion: @escaping (Any?) -> Void) {
         request(method: "POST", url: url, additionalHeaders: nil, jsonBody: body, completion: completion)
     }
