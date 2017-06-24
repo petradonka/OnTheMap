@@ -20,7 +20,7 @@ struct UdacityConfig {
     }
 
     struct Session {
-        static let PathExtention = "/session"
+        static let PathExtension = "/session"
 
         struct JSONProperties {
             static let account = "account"

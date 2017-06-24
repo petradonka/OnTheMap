@@ -14,25 +14,33 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        StudentLocation.studentLocations(limitTo: 10, skipping: 0, orderedBy: []) { (studentLocations) in
-            print(studentLocations.count)
+//        StudentLocation.studentLocations(limitTo: 10, skipping: 0, orderedBy: []) { (studentLocations) in
+//            print(studentLocations.count)
+//
+//            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId) { (studentLocation) in
+//                if let studentLocation = studentLocation {
+//                    print(studentLocation)
+//
+//                    studentLocation.send {
+//                        print("sent!")
+//                    }
+//
+//                    studentLocation.update(existingLocation: studentLocation) {
+//                        print("updated!")
+//                    }
+//
+//                    studentLocation.save {
+//                        print("saved!")
+//                    }
+//                }
+//            }
+//        }
 
-            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId) { (studentLocation) in
-                if let studentLocation = studentLocation {
-                    print(studentLocation)
+        Session.session(forUsername: "donkapetra@gmail.com", andPassword: "3ampiart120") { session in
+            print(session)
 
-                    studentLocation.send {
-                        print("sent!")
-                    }
-
-                    studentLocation.update(existingLocation: studentLocation) {
-                        print("updated!")
-                    }
-
-                    studentLocation.save {
-                        print("saved!")
-                    }
-                }
+            session.delete {
+                print("logged out!")
             }
         }
     }

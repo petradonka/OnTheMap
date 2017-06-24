@@ -23,7 +23,8 @@ struct UdacityClient {
         request(method: "DELETE", url: url, additionalHeaders: additionalHeaders, jsonBody: body, completion: completion)
     }
 
-    static func request(method: String, url: URL, additionalHeaders: [String : String]?, jsonBody: Any?, completion: @escaping (Any?) -> Void) {
+    static func request(method: String, url: URL, additionalHeaders: [String : String]?, jsonBody: Any?,
+                        completion: @escaping (Any?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -65,7 +66,13 @@ struct UdacityClient {
             }
 
             completion(jsonData)
-        }
+        }.resume()
+    }
+
+    static func getUrl(pathExtension: String) -> URL? {
+        var url = URLComponents(string: UdacityConfig.ApiBaseURL)
+        url?.path.append("\(pathExtension)")
+        return url?.url
     }
 
     private static func getXSRFToken() -> String? {
