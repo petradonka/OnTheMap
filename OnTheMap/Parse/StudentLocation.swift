@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum StudentLocationError: Error {
+    case missingProperty(property: String)
+    case couldNotParseJSON
+    case noResults
+}
+
 struct StudentLocation {
     let parseId: String
     let udacityUserId: String
@@ -18,45 +24,37 @@ struct StudentLocation {
     let latitude: Double
     let longitude: Double
 
-    init?(json: [String:AnyObject]) {
+    init(json: [String:AnyObject]) throws {
         guard let parseId = json[ParseConfig.StudentLocation.JSONProperties.objectId] as? String else {
-            print("could not parse objectId", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "objectId")
         }
 
         guard let uniqueKey = json[ParseConfig.StudentLocation.JSONProperties.uniqueKey] as? String else {
-            print("could not parse uniqueKey", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "uniqieKey")
         }
 
         guard let firstName = json[ParseConfig.StudentLocation.JSONProperties.firstName] as? String else {
-            print("could not parse firstname", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "firstName")
         }
 
         guard let lastName = json[ParseConfig.StudentLocation.JSONProperties.lastName] as? String else {
-            print("could not parse lastname", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "lastName")
         }
 
         guard let mapString = json[ParseConfig.StudentLocation.JSONProperties.mapString] as? String else {
-            print("could not parse mapstring", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "mapString")
         }
 
         guard let mediaURL = json[ParseConfig.StudentLocation.JSONProperties.mediaURL] as? String else {
-            print("could not parse mediaurl", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "mediaURL")
         }
 
         guard let latitude = json[ParseConfig.StudentLocation.JSONProperties.latitude] as? Double else {
-            print("could not parse latitude", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "latitude")
         }
 
         guard let longitude = json[ParseConfig.StudentLocation.JSONProperties.longitude] as? Double else {
-            print("could not parse longitude", json)
-            return nil
+            throw StudentLocationError.missingProperty(property: "objectId")
         }
 
         self.parseId = parseId
@@ -85,7 +83,8 @@ struct StudentLocation {
 // MARK: - ParseClient convenience methods
 
 extension StudentLocation {
-    static func studentLocations(limitTo limit: Int, skipping skip: Int, orderedBy order: [String], completion: @escaping ([StudentLocation]) -> Void) {
+    static func studentLocations(limitTo limit: Int, skipping skip: Int, orderedBy order: [String],
+                                 completion: @escaping (Result<[StudentLocation], StudentLocationError>) -> Void) {
         let queryParams: [String : String] = [
             ParseConfig.StudentLocation.QueryKeys.limit: String(limit),
             ParseConfig.StudentLocation.QueryKeys.skip: String(skip),
@@ -94,79 +93,102 @@ extension StudentLocation {
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName, withParams: queryParams) {
             ParseClient.get(url: url, completion: { jsonData in
-                guard let json = jsonData as? [String : AnyObject],
-                    let results = json["results"] as? [[String : AnyObject]] else {
-                        print("could not parse data")
-                        return
+                guard let json = jsonData as? [String : AnyObject] else {
+                    return completion(.failure(StudentLocationError.couldNotParseJSON))
+                }
+
+                guard let results = json["results"] as? [[String : AnyObject]] else {
+                    return completion(.failure(StudentLocationError.missingProperty(property: "results")))
+                }
+
+                guard results.count > 0 else {
+                    return completion(.failure(StudentLocationError.noResults))
                 }
 
                 var studentLocations: [StudentLocation] = []
 
                 for result in results {
-                    if let studentLocation = StudentLocation(json: result) {
+                    if let studentLocation = try? StudentLocation(json: result) {
                         studentLocations.append(studentLocation)
                     }
                 }
 
-                completion(studentLocations)
+                completion(.success(studentLocations))
             })
         }
     }
 
-    static func studentLocation(forUserId id: String, completion: @escaping (StudentLocation?) -> Void) {
+    static func studentLocation(forUserId id: String,
+                                completion: @escaping (Result<StudentLocation, StudentLocationError>) -> Void) {
         let queryParams = [
             "where": "{\"\(ParseConfig.StudentLocation.JSONProperties.uniqueKey)\":\"\(id)\"}"
         ]
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName, withParams: queryParams) {
             ParseClient.get(url: url, completion: { jsonData in
-                guard let json = jsonData as? [String : AnyObject],
-                    let results = json["results"] as? [[String : AnyObject]] else {
-                        print("could not parse data")
-                        return
+                guard let json = jsonData as? [String : AnyObject] else {
+                    return completion(.failure(StudentLocationError.couldNotParseJSON))
                 }
 
-                var studentLocations: [StudentLocation] = []
-
-                for result in results {
-                    if let studentLocation = StudentLocation(json: result) {
-                        studentLocations.append(studentLocation)
-                    }
+                guard let results = json["results"] as? [[String : AnyObject]] else {
+                    return completion(.failure(StudentLocationError.missingProperty(property: "results")))
                 }
 
-                completion(studentLocations.first)
+                guard results.count > 0, let firstResult = results.first else {
+                    return completion(.failure(StudentLocationError.noResults))
+                }
+
+                do {
+                    let studentLocation = try StudentLocation(json: firstResult)
+                    completion(.success(studentLocation))
+                } catch StudentLocationError.missingProperty(let property) {
+                    completion(.failure(StudentLocationError.missingProperty(property: property)))
+                } catch {
+                    print(error)
+                    return
+                }
             })
         }
     }
 
-    func save(completion: @escaping () -> Void) {
-        StudentLocation.studentLocation(forUserId: udacityUserId) { studentLocation in
-            if let studentLocation = studentLocation {                                      // student location already exists for the user
+    func save(completion: @escaping (Result<Void?, StudentLocationError>) -> Void) {
+        StudentLocation.studentLocation(forUserId: udacityUserId) { result in
+            switch result {
+            case .success(let studentLocation):
                 self.update(existingLocation: studentLocation, completion: completion)
-            } else {                                                                        // nothing exists yet
+
+            case .failure(StudentLocationError.noResults):
                 self.send(completion: completion)
+
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
 
-    func send(completion: @escaping () -> Void) {
+    func send(completion: @escaping (Result<Void?, StudentLocationError>) -> Void) {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName) {
             ParseClient.post(url: url, body: body, completion: { jsonData in
-                guard let json = jsonData as? [String : String],
-                    json[ParseConfig.StudentLocation.JSONProperties.objectId] != nil,
-                    json[ParseConfig.StudentLocation.JSONProperties.createdAt] != nil else {
-                        print("something went wrong...")
-                        return
+                guard let json = jsonData as? [String : String] else {
+                    return completion(.failure(StudentLocationError.couldNotParseJSON))
                 }
 
-                completion()
+                guard json[ParseConfig.StudentLocation.JSONProperties.objectId] != nil else {
+                    return completion(.failure(StudentLocationError.missingProperty(property: "objectId")))
+                }
+
+                guard json[ParseConfig.StudentLocation.JSONProperties.createdAt] != nil else {
+                    return completion(.failure(StudentLocationError.missingProperty(property: "createdAt")))
+                }
+
+                completion(.success(nil))
             })
         }
     }
 
-    func update(existingLocation: StudentLocation, completion: @escaping () -> Void) {
+    func update(existingLocation: StudentLocation, completion: @escaping (Result<Void?, StudentLocationError>) -> Void) {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName) {
@@ -175,13 +197,15 @@ extension StudentLocation {
 
             if let newUrl = newUrl?.url {
                 ParseClient.put(url: newUrl, body: body, completion: { jsonData in
-                    guard let json = jsonData as? [String : String],
-                        json[ParseConfig.StudentLocation.JSONProperties.updatedAt] != nil else {
-                            print("something went wrong...")
-                            return
+                    guard let json = jsonData as? [String : String] else {
+                        return completion(.failure(StudentLocationError.couldNotParseJSON))
                     }
 
-                    completion()
+                    guard json[ParseConfig.StudentLocation.JSONProperties.updatedAt] != nil else {
+                        return completion(.failure(StudentLocationError.missingProperty(property: "updatedAt")))
+                    }
+
+                    completion(.success(nil))
                 })
             }
         }
