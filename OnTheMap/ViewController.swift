@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         StudentLocation.studentLocations(limitTo: 10, skipping: 0, orderedBy: []) { (studentLocations) in
             print(studentLocations.count)
 
-            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId, completion: { (studentLocation) in
+            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId) { (studentLocation) in
                 if let studentLocation = studentLocation {
                     print(studentLocation)
 
@@ -25,15 +25,15 @@ class ViewController: UIViewController {
                         print("sent!")
                     }
 
-                    studentLocation.update(existingLocation: studentLocation, completion: {
+                    studentLocation.update(existingLocation: studentLocation) {
                         print("updated!")
-                    })
+                    }
 
                     studentLocation.save {
                         print("saved!")
                     }
                 }
-            })
+            }
         }
     }
 
