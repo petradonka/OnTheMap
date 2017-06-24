@@ -10,7 +10,7 @@ import Foundation
 
 struct StudentLocation {
     let parseId: String
-    let uniqueKey: String
+    let udacityUserId: String
     let firstName: String
     let lastName: String
     let mapString: String
@@ -60,7 +60,7 @@ struct StudentLocation {
         }
 
         self.parseId = parseId
-        self.uniqueKey = uniqueKey
+        self.udacityUserId = uniqueKey
         self.firstName = firstName
         self.lastName = lastName
         self.mapString = mapString
@@ -108,6 +108,43 @@ extension StudentLocation {
                 }
 
                 completion(studentLocations)
+            })
+        }
+    }
+
+    static func studentLocation(forUserId id: String, completion: @escaping (StudentLocation?) -> Void) {
+        let queryParams = [
+            "where": "{\"\(ParseConfig.StudentLocation.FieldNames.uniqueKey)\":\"\(id)\"}"
+        ]
+
+        if let url = ParseClient.urlForClass(ParseConfig.StudentLocation.ClassName, withParams: queryParams) {
+            ParseClient.get(url: url, completionHandler: { (data, response, error) in
+                guard error == nil,
+                    response != nil,
+                    let data = data else {
+                        print("something went wrong!")
+                        if let error = error {
+                            print(error)
+                        }
+                        return
+                }
+
+                guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                    let json = jsonData as? [String:AnyObject],
+                    let results = json["results"] as? [[String:AnyObject]] else {
+                        print("could not parse data")
+                        return
+                }
+
+                var studentLocations: [StudentLocation] = []
+
+                for result in results {
+                    if let studentLocation = StudentLocation(json: result) {
+                        studentLocations.append(studentLocation)
+                    }
+                }
+
+                completion(studentLocations.first)
             })
         }
     }

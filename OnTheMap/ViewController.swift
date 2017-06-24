@@ -16,6 +16,12 @@ class ViewController: UIViewController {
 
         StudentLocation.studentLocations(limitTo: 10, skipping: 0, orderedBy: []) { (studentLocations) in
             print(studentLocations.count)
+
+            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId, completion: { (studentLocation) in
+                if let studentLocation = studentLocation {
+                    print (studentLocation)
+                }
+            })
         }
     }
 
