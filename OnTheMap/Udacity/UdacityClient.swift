@@ -8,16 +8,23 @@
 
 import Foundation
 
+enum UdacityClientError: Error {
+    case couldNotParseJSON
+    case noData
+    case apiError(String)
+    case requestError(Error)
+}
+
 struct UdacityClient {
-    static func get(url: URL, completion: @escaping (Any?) -> Void) {
+    static func get(url: URL, completion: @escaping (Result<Any?, UdacityClientError>) -> Void) {
         request(method: "GET", url: url, additionalHeaders: nil, jsonBody: nil, completion: completion)
     }
 
-    static func post(url: URL, body: Any?, completion: @escaping (Any?) -> Void) {
+    static func post(url: URL, body: Any?, completion: @escaping (Result<Any?, UdacityClientError>) -> Void) {
         request(method: "POST", url: url, additionalHeaders: nil, jsonBody: body, completion: completion)
     }
 
-    static func delete(url: URL, body: Any?, completion: @escaping (Any?) -> Void) {
+    static func delete(url: URL, body: Any?, completion: @escaping (Result<Any?, UdacityClientError>) -> Void) {
         var additionalHeaders: [String : String] = [:]
 
         if let xsrfToken = getXSRFToken() {
@@ -28,7 +35,7 @@ struct UdacityClient {
     }
 
     static func request(method: String, url: URL, additionalHeaders: [String : String]?, jsonBody: Any?,
-                        completion: @escaping (Any?) -> Void) {
+                        completion: @escaping (Result<Any?, UdacityClientError>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -48,28 +55,26 @@ struct UdacityClient {
         let session = URLSession.shared
 
         session.dataTask(with: request) { data, response, error in
-            guard error == nil,
-                response != nil,
-                let data = data else {
-                    print("something went wrong!")
-                    if let error = error {
-                        print(error)
-                    }
-                    return
+            guard error == nil, response != nil else {
+                return completion(.failure(UdacityClientError.requestError(error!)))
+            }
+
+            guard let data = data else {
+                return completion(.failure(UdacityClientError.noData))
             }
 
             let range = Range(5..<data.count)
             let trimmedData = data.subdata(in: range)
 
             guard let jsonData = try? JSONSerialization.jsonObject(with: trimmedData, options: .allowFragments) else {
-                print("could not parse json")
                 if let responseString = String.init(data: data, encoding: .utf8) {
-                    print(responseString) // potential error message
+                    return completion(.failure(UdacityClientError.apiError(responseString)))
+                } else {
+                    return completion(.failure(UdacityClientError.couldNotParseJSON))
                 }
-                return
             }
 
-            completion(jsonData)
+            completion(.success(jsonData))
         }.resume()
     }
 

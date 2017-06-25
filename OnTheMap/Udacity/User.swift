@@ -8,32 +8,52 @@
 
 import Foundation
 
+enum UserError: Error {
+    case noFirstName
+    case noLastName
+    case couldNotParseJSON
+    case missingProperty(String)
+    case requestError(Error)
+}
+
 struct User {
     let userId: String
     let firstName: String
     let lastName: String
     let session: Session
 
-    func logout(completion: @escaping () -> Void) {
+    func logout(completion: @escaping (Result<Void?, SessionError>) -> Void) {
         session.delete(completion: completion)
     }
 
-    static func user(withSession session: Session, completion: @escaping (User) -> Void) {
+    static func user(withSession session: Session, completion: @escaping (Result<User, UserError>) -> Void) {
         if let url = getUrl(forUserId: session.accountId) {
-            UdacityClient.get(url: url, completion: { jsonBody in
-                guard let json = jsonBody as? [String:Any],
-                    let user = json[UdacityConfig.Users.JSONProperties.user] as? [String:Any] else {
-                        print("something went wrong, no user?")
-                        return
-                }
+            UdacityClient.get(url: url, completion: { result in
+                switch result {
+                case .success(let jsonBody):
+                    guard let json = jsonBody as? [String:Any] else {
+                        return completion(.failure(.couldNotParseJSON))
+                    }
 
-                guard let firstName = user[UdacityConfig.Users.JSONProperties.firstName] as? String,
-                    let lastName = user[UdacityConfig.Users.JSONProperties.lastName] as? String else {
-                        print("the user did not have a first or last name")
-                        return
-                }
+                    guard let userJSON = json[UdacityConfig.Users.JSONProperties.user] as? [String:Any] else {
+                        return completion(.failure(.missingProperty("user")))
+                    }
 
-                completion(User(userId: session.accountId, firstName: firstName, lastName: lastName, session: session))
+                    guard let firstName = userJSON[UdacityConfig.Users.JSONProperties.firstName] as? String else {
+                        return completion(.failure(.noFirstName))
+                    }
+
+                    guard let lastName = userJSON[UdacityConfig.Users.JSONProperties.lastName] as? String else {
+                        return completion(.failure(.noLastName))
+                    }
+
+                    let user = User(userId: session.accountId, firstName: firstName, lastName: lastName, session: session)
+
+                    completion(.success(user))
+
+                case .failure(let error):
+                    completion(.failure(.requestError(error)))
+                }
             })
         }
     }

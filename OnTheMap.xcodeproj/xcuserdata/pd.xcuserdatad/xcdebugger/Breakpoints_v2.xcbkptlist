@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OnTheMap/Udacity/Session.swift"
-            timestampString = "520031815.036164"
+            filePath = "OnTheMap/Udacity/UdacityClient.swift"
+            timestampString = "520069336.56271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "delete(completion:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "delete(url:body:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

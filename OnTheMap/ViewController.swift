@@ -51,35 +51,31 @@ class ViewController: UIViewController {
             }
         }
 
-        //        StudentLocation.studentLocations(limitTo: 10, skipping: 0, orderedBy: []) { (studentLocations) in
-        //            print(studentLocations.count)
-        //
-        //            StudentLocation.studentLocation(forUserId: studentLocations.first!.udacityUserId) { (studentLocation) in
-        //                if let studentLocation = studentLocation {
-        //                    print(studentLocation)
-        //
-        //                    studentLocation.send {
-        //                        print("sent!")
-        //                    }
-        //
-        //                    studentLocation.update(existingLocation: studentLocation) {
-        //                        print("updated!")
-        //                    }
-        //
-        //                    studentLocation.save {
-        //                        print("saved!")
-        //                    }
-        //                }
-        //            }
-        //        }
 
-        //        Session.session(forUsername: "donkapetra@gmail.com", andPassword: "3ampiart120") { session in
-        //            print(session)
-        //
-        //            User.user(withSession: session) { user in
-        //                print(user)
-        //            }
-        //        }
+        Session.session(forUsername: "donkapetra@gmail.com", andPassword: "3ampiart120") { result in
+            switch result {
+            case .success(let session):
+                print(session)
+
+                User.user(withSession: session) { result in
+                    switch result {
+                    case .success(let user):
+                        print(user)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+
+            case .failure(let error):
+                switch error {
+                case .loginError(let errorMessage):
+                    // update ui
+                    print("LOGIN FAILED: \(errorMessage)")
+                default:
+                    print(error)
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
