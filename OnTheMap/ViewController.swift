@@ -71,6 +71,9 @@ class ViewController: UIViewController {
                 case .loginError(let errorMessage):
                     // update ui
                     print("LOGIN FAILED: \(errorMessage)")
+                    print(error.localizedDescription)
+                case .requestError(let error):
+                    print(error.localizedDescription)
                 default:
                     print(error)
                 }

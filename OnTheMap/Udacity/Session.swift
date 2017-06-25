@@ -65,7 +65,16 @@ struct Session {
                     completion(.success(session))
                     
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    switch error {
+                    case .requestError(let error):
+                        completion(.failure(.requestError(error)))
+                    case .apiError(let error):
+                        completion(.failure(.apiError(error)))
+                    case .couldNotParseJSON:
+                        completion(.failure(.couldNotParseJSON))
+                    default:
+                        completion(.failure(.requestError(error)))
+                    }
                 }
             }
         }
