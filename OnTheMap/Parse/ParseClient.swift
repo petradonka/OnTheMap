@@ -12,7 +12,7 @@ enum ParseClientError: Error {
     case couldNotParseJSON
     case noData
     case apiError(String)
-    case requestError(Error)
+    case requestError(String)
 }
 
 struct ParseClient {
@@ -44,7 +44,7 @@ struct ParseClient {
         let session = URLSession.shared
         session.dataTask(with: request, completionHandler: { (data, response, error) in
             guard error == nil, response != nil else {
-                return completion(Result.failure(ParseClientError.requestError(error!)))
+                return completion(Result.failure(ParseClientError.requestError(error!.localizedDescription)))
             }
 
             guard let data = data else {

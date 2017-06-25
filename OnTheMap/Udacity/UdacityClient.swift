@@ -12,7 +12,7 @@ enum UdacityClientError: Error {
     case couldNotParseJSON
     case noData
     case apiError(String)
-    case requestError(Error)
+    case requestError(String)
 }
 
 struct UdacityClient {
@@ -56,7 +56,7 @@ struct UdacityClient {
 
         session.dataTask(with: request) { data, response, error in
             guard error == nil, response != nil else {
-                return completion(.failure(UdacityClientError.requestError(error!)))
+                return completion(.failure(UdacityClientError.requestError(error!.localizedDescription)))
             }
 
             guard let data = data else {

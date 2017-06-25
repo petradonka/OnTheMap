@@ -9,7 +9,7 @@
 import Foundation
 
 enum SessionError: Error {
-    case requestError(Error)
+    case requestError(String)
     case couldNotParseJSON
     case missingProperty(String)
     case apiError(String)
@@ -72,8 +72,8 @@ struct Session {
                         completion(.failure(.apiError(error)))
                     case .couldNotParseJSON:
                         completion(.failure(.couldNotParseJSON))
-                    default:
-                        completion(.failure(.requestError(error)))
+                    case .noData:
+                        completion(.failure(.requestError("No data was returned")))
                     }
                 }
             }
@@ -95,7 +95,14 @@ struct Session {
                     
                     completion(.success(nil))
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    switch error {
+                    case .apiError(let error), .requestError(let error):
+                        completion(.failure(.requestError(error)))
+                    case .couldNotParseJSON:
+                        completion(.failure(.couldNotParseJSON))
+                    case .noData:
+                        completion(.failure(.requestError("No data was returned")))
+                    }
                 }
             }
         }
