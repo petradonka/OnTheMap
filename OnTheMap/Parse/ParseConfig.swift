@@ -16,7 +16,7 @@ struct ParseConfig {
         static let ApiKey = "X-Parse-REST-API-Key"
     }
 
-    struct StudentLocation {
+    struct StudentInformation {
         static let ClassName = "StudentLocation"
 
         struct JSONProperties {
