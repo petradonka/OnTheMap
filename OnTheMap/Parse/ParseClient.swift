@@ -8,28 +8,21 @@
 
 import Foundation
 
-enum ParseClientError: Error {
-    case couldNotParseJSON
-    case noData
-    case apiError(String)
-    case requestError(String)
-}
-
 struct ParseClient {
-    static func get(url: URL, completion: @escaping (Result<Any?, ParseClientError>) -> Void) {
+    static func get(url: URL, completion: @escaping (Result<Any?, OnTheMapError>) -> Void) {
         request(method: "GET", url: url, jsonBody: nil, completion: completion)
     }
 
-    static func post(url: URL, body: Any?, completion: @escaping (Result<Any?, ParseClientError>) -> Void) {
+    static func post(url: URL, body: Any?, completion: @escaping (Result<Any?, OnTheMapError>) -> Void) {
         request(method: "POST", url: url, jsonBody: body, completion: completion)
     }
 
-    static func put(url: URL, body: Any?, completion: @escaping (Result<Any?, ParseClientError>) -> Void) {
+    static func put(url: URL, body: Any?, completion: @escaping (Result<Any?, OnTheMapError>) -> Void) {
         request(method: "PUT", url: url, jsonBody: body, completion: completion)
     }
 
     static func request(method: String, url: URL, jsonBody: Any?,
-                        completion: @escaping (Result<Any?, ParseClientError>) -> Void) {
+                        completion: @escaping (Result<Any?, OnTheMapError>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = method;
         request.addValue(ParseConfig.ApplicationId, forHTTPHeaderField: ParseConfig.Headers.ApplicationId)
@@ -44,18 +37,20 @@ struct ParseClient {
         let session = URLSession.shared
         session.dataTask(with: request, completionHandler: { (data, response, error) in
             guard error == nil, response != nil else {
-                return completion(Result.failure(ParseClientError.requestError(error!.localizedDescription)))
+                return completion(Result.failure(.requestError(error!.localizedDescription)))
             }
 
             guard let data = data else {
-                return completion(Result.failure(ParseClientError.noData))
+                return completion(Result.failure(.noData))
             }
+
+            // TODO: return here parse errors already as .apiError
 
             guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
                 if let responseString = String.init(data: data, encoding: .utf8) {
-                    return completion(Result.failure(ParseClientError.apiError(responseString)))
+                    return completion(Result.failure(.apiError(responseString)))
                 } else {
-                    return completion(Result.failure(ParseClientError.couldNotParseJSON))
+                    return completion(Result.failure(.couldNotParseJSON))
                 }
             }
 

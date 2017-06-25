@@ -12,7 +12,7 @@ import Foundation
 
 extension StudentInformation {
     static func studentLocations(limitTo limit: Int, skipping skip: Int, orderedBy order: [String],
-                                 completion: @escaping (Result<[StudentInformation], StudentInformationError>) -> Void) {
+                                 completion: @escaping (Result<[StudentInformation], OnTheMapError>) -> Void) {
         let queryParams: [String : String] = [
             ParseConfig.StudentInformation.QueryKeys.limit: String(limit),
             ParseConfig.StudentInformation.QueryKeys.skip: String(skip),
@@ -45,14 +45,14 @@ extension StudentInformation {
 
                     completion(.success(studentLocations))
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    completion(.failure(error))
                 }
             }
         }
     }
 
     static func studentLocation(forUserId id: String,
-                                completion: @escaping (Result<StudentInformation, StudentInformationError>) -> Void) {
+                                completion: @escaping (Result<StudentInformation, OnTheMapError>) -> Void) {
         let queryParams = [
             "where": "{\"\(ParseConfig.StudentInformation.JSONProperties.uniqueKey)\":\"\(id)\"}"
         ]
@@ -76,20 +76,20 @@ extension StudentInformation {
                     do {
                         let studentLocation = try StudentInformation(json: firstResult)
                         completion(.success(studentLocation))
-                    } catch StudentInformationError.missingProperty(let property) {
+                    } catch OnTheMapError.missingProperty(let property) {
                         completion(.failure(.missingProperty(property)))
                     } catch {
                         print(error)
                         return
                     }
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    completion(.failure(error))
                 }
             }
         }
     }
 
-    func save(completion: @escaping (Result<Void?, StudentInformationError>) -> Void) {
+    func save(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         StudentInformation.studentLocation(forUserId: udacityUserId) { result in
             switch result {
             case .success(let studentLocation):
@@ -104,7 +104,7 @@ extension StudentInformation {
         }
     }
 
-    func send(completion: @escaping (Result<Void?, StudentInformationError>) -> Void) {
+    func send(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentInformation.ClassName) {
@@ -125,13 +125,13 @@ extension StudentInformation {
 
                     completion(.success(nil))
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    completion(.failure(error))
                 }
             }
         }
     }
 
-    func update(existingLocation: StudentInformation, completion: @escaping (Result<Void?, StudentInformationError>) -> Void) {
+    func update(existingLocation: StudentInformation, completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentInformation.ClassName) {
@@ -152,7 +152,7 @@ extension StudentInformation {
 
                         completion(.success(nil))
                     case .failure(let error):
-                        completion(.failure(.requestError(error)))
+                        completion(.failure(error))
                     }
                 }
             }

@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum StudentInformationError: Error {
-    case missingProperty(String)
-    case couldNotParseJSON
-    case noResults
-    case requestError(ParseClientError)
-}
-
 struct StudentInformation {
     let parseId: String
     let udacityUserId: String
@@ -27,35 +20,35 @@ struct StudentInformation {
 
     init(json: [String:AnyObject]) throws {
         guard let parseId = json[ParseConfig.StudentInformation.JSONProperties.objectId] as? String else {
-            throw StudentInformationError.missingProperty("objectId")
+            throw OnTheMapError.missingProperty("objectId")
         }
 
         guard let uniqueKey = json[ParseConfig.StudentInformation.JSONProperties.uniqueKey] as? String else {
-            throw StudentInformationError.missingProperty("uniqieKey")
+            throw OnTheMapError.missingProperty("uniqieKey")
         }
 
         guard let firstName = json[ParseConfig.StudentInformation.JSONProperties.firstName] as? String else {
-            throw StudentInformationError.missingProperty("firstName")
+            throw OnTheMapError.missingProperty("firstName")
         }
 
         guard let lastName = json[ParseConfig.StudentInformation.JSONProperties.lastName] as? String else {
-            throw StudentInformationError.missingProperty("lastName")
+            throw OnTheMapError.missingProperty("lastName")
         }
 
         guard let mapString = json[ParseConfig.StudentInformation.JSONProperties.mapString] as? String else {
-            throw StudentInformationError.missingProperty("mapString")
+            throw OnTheMapError.missingProperty("mapString")
         }
 
         guard let mediaURL = json[ParseConfig.StudentInformation.JSONProperties.mediaURL] as? String else {
-            throw StudentInformationError.missingProperty("mediaURL")
+            throw OnTheMapError.missingProperty("mediaURL")
         }
 
         guard let latitude = json[ParseConfig.StudentInformation.JSONProperties.latitude] as? Double else {
-            throw StudentInformationError.missingProperty("latitude")
+            throw OnTheMapError.missingProperty("latitude")
         }
 
         guard let longitude = json[ParseConfig.StudentInformation.JSONProperties.longitude] as? Double else {
-            throw StudentInformationError.missingProperty("objectId")
+            throw OnTheMapError.missingProperty("objectId")
         }
 
         self.parseId = parseId

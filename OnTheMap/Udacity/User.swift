@@ -8,25 +8,17 @@
 
 import Foundation
 
-enum UserError: Error {
-    case noFirstName
-    case noLastName
-    case couldNotParseJSON
-    case missingProperty(String)
-    case requestError(Error)
-}
-
 struct User {
     let userId: String
     let firstName: String
     let lastName: String
     let session: Session
 
-    func logout(completion: @escaping (Result<Void?, SessionError>) -> Void) {
+    func logout(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         session.delete(completion: completion)
     }
 
-    static func user(withSession session: Session, completion: @escaping (Result<User, UserError>) -> Void) {
+    static func user(withSession session: Session, completion: @escaping (Result<User, OnTheMapError>) -> Void) {
         if let url = getUrl(forUserId: session.accountId) {
             UdacityClient.get(url: url, completion: { result in
                 switch result {
@@ -52,7 +44,7 @@ struct User {
                     completion(.success(user))
 
                 case .failure(let error):
-                    completion(.failure(.requestError(error)))
+                    completion(.failure(error))
                 }
             })
         }

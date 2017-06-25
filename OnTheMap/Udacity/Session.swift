@@ -8,20 +8,12 @@
 
 import Foundation
 
-enum SessionError: Error {
-    case requestError(String)
-    case couldNotParseJSON
-    case missingProperty(String)
-    case apiError(String)
-    case loginError(String)
-}
-
 struct Session {
     var sessionId: String
     var accountId: String
     
     static func session(forUsername username: String, andPassword password: String,
-                        completion: @escaping (Result<Session, SessionError>) -> Void) {
+                        completion: @escaping (Result<Session, OnTheMapError>) -> Void) {
         let body = [
             "udacity" : [
                 "username" : username,
@@ -65,22 +57,13 @@ struct Session {
                     completion(.success(session))
                     
                 case .failure(let error):
-                    switch error {
-                    case .requestError(let error):
-                        completion(.failure(.requestError(error)))
-                    case .apiError(let error):
-                        completion(.failure(.apiError(error)))
-                    case .couldNotParseJSON:
-                        completion(.failure(.couldNotParseJSON))
-                    case .noData:
-                        completion(.failure(.requestError("No data was returned")))
-                    }
+                    completion(.failure(error))
                 }
             }
         }
     }
     
-    func delete(completion: @escaping (Result<Void?, SessionError>) -> Void) {
+    func delete(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         if let url = UdacityClient.getUrl(pathExtension: UdacityConfig.Session.PathExtension) {
             UdacityClient.delete(url: url, body: nil) { result in
                 switch result {
@@ -95,14 +78,7 @@ struct Session {
                     
                     completion(.success(nil))
                 case .failure(let error):
-                    switch error {
-                    case .apiError(let error), .requestError(let error):
-                        completion(.failure(.requestError(error)))
-                    case .couldNotParseJSON:
-                        completion(.failure(.couldNotParseJSON))
-                    case .noData:
-                        completion(.failure(.requestError("No data was returned")))
-                    }
+                    completion(.failure(error))
                 }
             }
         }
