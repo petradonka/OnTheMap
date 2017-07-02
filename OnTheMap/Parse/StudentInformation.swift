@@ -61,6 +61,12 @@ struct StudentInformation {
         self.longitude = longitude
     }
 
+    var fullName: String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+
     func toJSON() -> [String : Any] {
         return [
             ParseConfig.StudentInformation.JSONProperties.uniqueKey: udacityUserId,

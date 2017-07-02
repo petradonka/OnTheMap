@@ -8,15 +8,13 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, StudentInformationDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,7 +65,14 @@ class LoginViewController: UIViewController {
     }
 
     private func finishLogin() {
-        performSegue(withIdentifier: "afterLoginSegue", sender: self)
+        fetchStudentInformations {
+            switch $0 {
+            case .success:
+                self.performSegue(withIdentifier: "afterLoginSegue", sender: self)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     /*
