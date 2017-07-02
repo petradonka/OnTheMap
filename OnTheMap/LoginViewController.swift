@@ -23,31 +23,60 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - IBAction
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         if let username = usernameTextField.text, let password = passwordTextField.text {
-            Session.session(forUsername: username, andPassword: password) { result in
-                switch result {
-                case .success(let session):
-                    print(session)
-                case .failure(let error):
-                    print(error)
-                }
-            }
+            login(username: username, password: password)
         }
     }
 
     @IBAction func signupButtonPressed(_ sender: Any) {
     }
 
-    /*
-    // MARK: - Navigation
+    // MARK: - Login logic
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func login(username: String, password: String) {
+        Session.session(forUsername: username, andPassword: password) { result in
+            switch result {
+            case .success(let session):
+                print(session)
+                User.user(withSession: session, completion: { (result) in
+                    switch result {
+                    case .success(let user):
+                        DispatchQueue.main.async {
+                            self.saveNewUser(user)
+                            self.finishLogin()
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                })
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
-    */
 
+    private func saveNewUser(_ user: User) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.user = user
+            print(user)
+        }
+    }
+
+    private func finishLogin() {
+        performSegue(withIdentifier: "afterLoginSegue", sender: self)
+    }
+
+    /*
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }
