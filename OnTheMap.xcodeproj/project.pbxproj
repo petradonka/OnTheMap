@@ -23,6 +23,7 @@
 		6FB8F3761EF86A9D008888F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FB8F3751EF86A9D008888F6 /* Assets.xcassets */; };
 		6FB8F3791EF86A9D008888F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FB8F3771EF86A9D008888F6 /* LaunchScreen.storyboard */; };
 		6FBC28B61F0918D2002BE193 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28B51F0918D2002BE193 /* LoginViewController.swift */; };
+		6FBC28B91F093415002BE193 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FBC28B81F093415002BE193 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		6FB8F3781EF86A9D008888F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6FB8F37A1EF86A9D008888F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FBC28B51F0918D2002BE193 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6FBC28B81F093415002BE193 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FBC28B91F093415002BE193 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +87,7 @@
 			children = (
 				6FB8F36D1EF86A9D008888F6 /* OnTheMap */,
 				6FB8F36C1EF86A9D008888F6 /* Products */,
+				6FBC28B71F093415002BE193 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +115,14 @@
 				6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		6FBC28B71F093415002BE193 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6FBC28B81F093415002BE193 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +157,11 @@
 				TargetAttributes = {
 					6FB8F36A1EF86A9D008888F6 = {
 						CreatedOnToolsVersion = 9.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
