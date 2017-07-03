@@ -15,6 +15,8 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
     }
 
     override func didReceiveMemoryWarning() {

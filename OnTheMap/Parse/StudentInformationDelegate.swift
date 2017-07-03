@@ -30,9 +30,9 @@ extension StudentInformationDelegate {
         StudentInformation.studentLocations(limitTo: 100, skipping: 0, orderedBy: []) { (result) in
             switch result {
             case .success(let studentInformations):
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.studentInformations = studentInformations
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                        appDelegate.studentInformations = studentInformations
                         completion(.success(nil))
                     }
                 }

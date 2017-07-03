@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
-class MapViewController: UIViewController, StudentInformationDelegate {
+class MapViewController: UIViewController {
+
+    @IBOutlet weak var mapView: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,33 +20,15 @@ class MapViewController: UIViewController, StudentInformationDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        setupStudentInformations()
+        setupStudentInformations {
+            self.addStudentInformationsToMap()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    private func setupStudentInformations() {
-        // show loading indicator
-        if let studentInformations = studentInformations {
-            print(studentInformations.count)
-        } else {
-            fetchStudentInformations {
-                switch $0 {
-                case .success:
-                    if let studentInformations = self.studentInformations {
-                        print(studentInformations.count)
-                        // hide loading indicator
-                    }
-                case .failure(let error):
-                    print(error) // extract error handling (show error & hide loading indicator)
-                }
-            }
-        }
-    }
-    
+    }    
 
     /*
     // MARK: - Navigation
