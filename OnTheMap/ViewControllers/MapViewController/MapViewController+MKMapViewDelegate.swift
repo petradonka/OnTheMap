@@ -10,16 +10,34 @@ import Foundation
 import MapKit
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        print(view)
-    }
-
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print(view)
-    }
-
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(view)
+        guard let annotation = view.annotation as? StudentInformationAnnotation else {
+            return
+        }
+
+        guard let url = URL(string: annotation.studentInformation.mediaURL) else {
+            return // TODO: not a url, inform the user
+        }
+
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotation = annotation as? StudentInformationAnnotation {
+            let identifier = "studentInformationAnnotationView"
+            
+            if let dequedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                dequedView.annotation = annotation
+                return dequedView
+            } else {
+                let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+                return view
+            }
+        } else {
+            return nil
+        }
     }
 
     func addStudentInformationsToMap() {
@@ -27,16 +45,9 @@ extension MapViewController: MKMapViewDelegate {
             return
         }
 
-        studentInformations.forEach { studentInformation in
-            let coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
+        let annotations = studentInformations.map { StudentInformationAnnotation.init(studentInformation: $0) }
 
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = studentInformation.fullName
-            annotation.subtitle = studentInformation.mediaURL
-
-            mapView.addAnnotation(annotation)
-        }
+        mapView.addAnnotations(annotations)
 
     }
 }
