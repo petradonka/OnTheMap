@@ -30,6 +30,7 @@
 		6FBC28BB1F093C10002BE193 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28BA1F093C10002BE193 /* MapViewController.swift */; };
 		6FBC28BF1F093C42002BE193 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28BE1F093C42002BE193 /* ListTableViewController.swift */; };
 		6FBC28C11F093D93002BE193 /* StudentInformationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28C01F093D93002BE193 /* StudentInformationDelegate.swift */; };
+		6FD1C00A1F12961300AC6FB7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD1C0091F12961300AC6FB7 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		6FBC28BA1F093C10002BE193 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6FBC28BE1F093C42002BE193 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		6FBC28C01F093D93002BE193 /* StudentInformationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationDelegate.swift; sourceTree = "<group>"; };
+		6FD1C0091F12961300AC6FB7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				6F2B1F571EFEC8BD0025D327 /* Udacity */,
 				6F2B1F601EFEFB770025D327 /* Result.swift */,
 				6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */,
+				6FD1C0091F12961300AC6FB7 /* GradientView.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			files = (
 				6F46A1641F094ED10064686F /* MapViewController+StudentInformationDelegate.swift in Sources */,
 				6F28F3A31EFE87C200E2CAF5 /* StudentInformation.swift in Sources */,
+				6FD1C00A1F12961300AC6FB7 /* GradientView.swift in Sources */,
 				6F4CC4961EFFB73300FE7F44 /* StudentInformation+ParseClient.swift in Sources */,
 				6F2B1F5B1EFECD300025D327 /* Session.swift in Sources */,
 				6F46A1621F094E970064686F /* MapViewController+MKMapViewDelegate.swift in Sources */,
