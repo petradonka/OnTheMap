@@ -31,6 +31,7 @@
 		6FBC28BF1F093C42002BE193 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28BE1F093C42002BE193 /* ListTableViewController.swift */; };
 		6FBC28C11F093D93002BE193 /* StudentInformationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC28C01F093D93002BE193 /* StudentInformationDelegate.swift */; };
 		6FD1C00A1F12961300AC6FB7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD1C0091F12961300AC6FB7 /* GradientView.swift */; };
+		6FD1C00E1F154F5800AC6FB7 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD1C00D1F154F5800AC6FB7 /* LoginTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		6FBC28BE1F093C42002BE193 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		6FBC28C01F093D93002BE193 /* StudentInformationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationDelegate.swift; sourceTree = "<group>"; };
 		6FD1C0091F12961300AC6FB7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		6FD1C00D1F154F5800AC6FB7 /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				6F2B1F571EFEC8BD0025D327 /* Udacity */,
 				6F2B1F601EFEFB770025D327 /* Result.swift */,
 				6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */,
+				6FD1C00D1F154F5800AC6FB7 /* LoginTextField.swift */,
 				6FD1C0091F12961300AC6FB7 /* GradientView.swift */,
 			);
 			path = OnTheMap;
@@ -244,6 +247,7 @@
 				6F4CC4961EFFB73300FE7F44 /* StudentInformation+ParseClient.swift in Sources */,
 				6F2B1F5B1EFECD300025D327 /* Session.swift in Sources */,
 				6F46A1621F094E970064686F /* MapViewController+MKMapViewDelegate.swift in Sources */,
+				6FD1C00E1F154F5800AC6FB7 /* LoginTextField.swift in Sources */,
 				6FBC28BF1F093C42002BE193 /* ListTableViewController.swift in Sources */,
 				6F46A1661F0ACB030064686F /* StudentInformationAnnotation.swift in Sources */,
 				6F20E0C51EFE7F020066FFE5 /* ParseConfig.swift in Sources */,
