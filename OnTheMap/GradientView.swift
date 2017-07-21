@@ -31,16 +31,17 @@ class GradientView: UIView {
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
-        self.layer.insertSublayer(getGradientLayer(), at: 0)
+        self.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        self.layer.insertSublayer(getGradientLayer(rect), at: 0)
     }
 
-    func getGradientLayer() -> CALayer {
+    func getGradientLayer(_ rect: CGRect) -> CALayer {
         let gradientColors: [CGColor] = [self.gradientColors[0].cgColor,
                                          self.gradientColors[1].cgColor]
         let gradientLocations: [Double] = [0.0, 1.0]
 
         let gradientLayer: CAGradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.frame
+        gradientLayer.frame = rect
 
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint

@@ -3,6 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in static StudentLocation.studentLocations(limitTo:skipping:orderedBy:completion:):StudentLocation.swift">
+      </ContextState>
+      <ContextState
+         contextName = "LoginViewController.viewWillTransition(to:with:):LoginViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "static ParseClient.urlForClass(_:withParams:):ParseClient.swift">
          <PersistentStrings>
             <PersistentString
@@ -14,7 +20,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in static StudentLocation.studentLocations(limitTo:skipping:orderedBy:completion:):StudentLocation.swift">
+         contextName = "GradientView.draw(_:):GradientView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.layer.sublayers">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

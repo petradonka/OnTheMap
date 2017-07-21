@@ -25,6 +25,10 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        backgroundView.draw(CGRect(origin: CGPoint.init(x: 0, y: 0), size: size))
+    }
+
     // MARK: - IBAction
     
     @IBAction func loginButtonPressed(_ sender: Any) {
