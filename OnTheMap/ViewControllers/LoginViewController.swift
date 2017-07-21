@@ -38,6 +38,7 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
     }
 
     @IBAction func signupButtonPressed(_ sender: Any) {
+        openSignupPage()
     }
 
     // MARK: - Login logic
@@ -79,6 +80,12 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+
+    private func openSignupPage() {
+        if let url = URL(string: UdacityConfig.SignupURL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 

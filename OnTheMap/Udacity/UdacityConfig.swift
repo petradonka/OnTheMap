@@ -11,6 +11,8 @@ import Foundation
 struct UdacityConfig {
     static let ApiBaseURL = "https://www.udacity.com/api"
 
+    static let SignupURL = "https://www.udacity.com/account/auth#!/signup"
+
     struct Headers {
         static let XSRFToken = "X-XSRF-TOKEN"
     }
