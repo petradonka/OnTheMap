@@ -100,6 +100,15 @@
 			path = Udacity;
 			sourceTree = "<group>";
 		};
+		6F3AB3EE1F24AFC500E7A64B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6FD1C00D1F154F5800AC6FB7 /* LoginTextField.swift */,
+				6FD1C0091F12961300AC6FB7 /* GradientView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6F46A15F1F094E6F0064686F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,8 +160,7 @@
 				6F2B1F571EFEC8BD0025D327 /* Udacity */,
 				6F2B1F601EFEFB770025D327 /* Result.swift */,
 				6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */,
-				6FD1C00D1F154F5800AC6FB7 /* LoginTextField.swift */,
-				6FD1C0091F12961300AC6FB7 /* GradientView.swift */,
+				6F3AB3EE1F24AFC500E7A64B /* Views */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
