@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Login" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -127,6 +127,7 @@
                             <constraint firstItem="eQg-VQ-exV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="lkK-wh-LkO"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="xYN-Za-U25"/>
                     <connections>
                         <outlet property="backgroundView" destination="Bs0-8N-Alv" id="b95-Uh-5oz"/>
                         <outlet property="passwordTextField" destination="i59-k1-LR5" id="zL8-Gp-x9g"/>
@@ -175,8 +176,12 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="List" image="icon_listview-deselected" id="AuX-jm-Jfw"/>
+                    <connections>
+                        <segue destination="ruf-Ps-Jj4" kind="unwind" identifier="logoutSegue" unwindAction="unwindToLoginWithUnwindSegue:" id="ebx-md-glM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bzC-pv-qvP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ruf-Ps-Jj4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2068" y="498"/>
         </scene>
@@ -210,16 +215,18 @@
                     <tabBarItem key="tabBarItem" title="Map" image="icon_mapview-deselected" id="VWV-9R-88g"/>
                     <connections>
                         <outlet property="mapView" destination="fPj-bJ-8hK" id="T82-X9-39K"/>
+                        <segue destination="oit-A0-PMD" kind="unwind" identifier="logoutSegue" unwindAction="unwindToLoginWithUnwindSegue:" id="uAT-UX-Raj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bpz-n9-6Xg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="oit-A0-PMD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2068" y="-187.55622188905548"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iGH-Ah-cHO">
             <objects>
-                <navigationController id="uqc-44-S6w" sceneMemberID="viewController">
+                <navigationController modalTransitionStyle="flipHorizontal" id="uqc-44-S6w" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W4h-TU-mVY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -235,9 +242,13 @@
         <!--On The Map-->
         <scene sceneID="uaH-9S-FhK">
             <objects>
-                <tabBarController id="Fvc-Xp-kyk" sceneMemberID="viewController">
+                <tabBarController id="Fvc-Xp-kyk" customClass="OnTheMapTabBarController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="On The Map" id="E0N-tZ-bXm">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="xPN-qV-GVH"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="xPN-qV-GVH">
+                            <connections>
+                                <action selector="handleLogoutTapped" destination="Fvc-Xp-kyk" id="XXX-nq-S43"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="kbn-pW-Xxn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>

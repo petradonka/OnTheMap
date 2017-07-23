@@ -33,38 +33,38 @@
             endingLineNumber = "17"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "OnTheMap.ViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "OnTheMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pd/Developer/iOS%20Nanodegree/OnTheMap/OnTheMap/ViewController.swift"
-                  timestampString = "522359091.323504"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "118">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (OnTheMap.Result&lt;Swift.Array&lt;OnTheMap.StudentInformation&gt;, OnTheMap.OnTheMapError&gt;) -&gt; () in OnTheMap.ViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "OnTheMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pd/Developer/iOS%20Nanodegree/OnTheMap/OnTheMap/ViewController.swift"
-                  timestampString = "522359091.325948"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OnTheMap/Protocols/Logoutable.swift"
+            timestampString = "522499085.37439"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "logout()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "OnTheMap/ViewControllers/MapViewController/MapViewController+LogoutDelegate.swift"
+            timestampString = "522499782.862525"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "dismissAfterLogout()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

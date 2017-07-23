@@ -41,6 +41,10 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
         openSignupPage()
     }
 
+    @IBAction func unwindToLogin(unwindSegue: UIStoryboardSegue) {
+        print(unwindSegue)
+    }
+
     // MARK: - Login logic
 
     private func login(username: String, password: String) {
