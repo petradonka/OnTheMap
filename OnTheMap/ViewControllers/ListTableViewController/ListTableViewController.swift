@@ -34,4 +34,21 @@ class ListTableViewController: UITableViewController {
 
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let studentInformation = studentInformations?[indexPath.row] {
+            openStudentInformationURL(studentInformation)
+        }
+
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    private func openStudentInformationURL(_ studentInformation: StudentInformation) {
+        if let url = URL.init(string: studentInformation.mediaURL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("could not open URL", studentInformation.mediaURL)
+            // show user facing error
+        }
+    }
 }
