@@ -15,9 +15,9 @@ class ListTableViewController: UITableViewController, StudentInformationDelegate
         setupStudentInformations()
     }
 
-    private func setupStudentInformations() {
+    func setupStudentInformations(andFetch shouldFetch: Bool = false) {
         // show loading indicator
-        if let studentInformations = studentInformations {
+        if !shouldFetch, let studentInformations = studentInformations {
             print(studentInformations.count)
         } else {
             fetchStudentInformations {

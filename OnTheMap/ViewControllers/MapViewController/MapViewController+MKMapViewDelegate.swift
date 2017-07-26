@@ -40,14 +40,8 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 
-    func addStudentInformationsToMap() {
-        guard let studentInformations = studentInformations else {
-            return
-        }
-
+    func addStudentInformationsToMap(studentInformations: [StudentInformation]) {
         let annotations = studentInformations.map { StudentInformationAnnotation.init(studentInformation: $0) }
-
         mapView.addAnnotations(annotations)
-
     }
 }
