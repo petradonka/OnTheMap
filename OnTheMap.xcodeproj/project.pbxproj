@@ -10,6 +10,7 @@
 		6F11AFEF1F28F7F10008336E /* Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F11AFEE1F28F7F10008336E /* Refreshable.swift */; };
 		6F11AFF11F28F9190008336E /* MapViewController+Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F11AFF01F28F9190008336E /* MapViewController+Refreshable.swift */; };
 		6F11AFF31F28FAA20008336E /* ListTableViewController+Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F11AFF21F28FAA20008336E /* ListTableViewController+Refreshable.swift */; };
+		6F11AFF51F2905FD0008336E /* ListTableViewController+StudentInformationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F11AFF41F2905FD0008336E /* ListTableViewController+StudentInformationDelegate.swift */; };
 		6F20E0C31EFE78410066FFE5 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F20E0C21EFE78410066FFE5 /* ParseClient.swift */; };
 		6F20E0C51EFE7F020066FFE5 /* ParseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F20E0C41EFE7F020066FFE5 /* ParseConfig.swift */; };
 		6F28F3A31EFE87C200E2CAF5 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F28F3A21EFE87C200E2CAF5 /* StudentInformation.swift */; };
@@ -41,6 +42,7 @@
 		6F11AFEE1F28F7F10008336E /* Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refreshable.swift; sourceTree = "<group>"; };
 		6F11AFF01F28F9190008336E /* MapViewController+Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Refreshable.swift"; sourceTree = "<group>"; };
 		6F11AFF21F28FAA20008336E /* ListTableViewController+Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListTableViewController+Refreshable.swift"; sourceTree = "<group>"; };
+		6F11AFF41F2905FD0008336E /* ListTableViewController+StudentInformationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListTableViewController+StudentInformationDelegate.swift"; sourceTree = "<group>"; };
 		6F20E0C21EFE78410066FFE5 /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		6F20E0C41EFE7F020066FFE5 /* ParseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConfig.swift; sourceTree = "<group>"; };
 		6F28F3A21EFE87C200E2CAF5 /* StudentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				6FBC28BE1F093C42002BE193 /* ListTableViewController.swift */,
+				6F11AFF41F2905FD0008336E /* ListTableViewController+StudentInformationDelegate.swift */,
 				6F11AFF21F28FAA20008336E /* ListTableViewController+Refreshable.swift */,
 			);
 			path = ListTableViewController;
@@ -293,6 +296,7 @@
 				6F46A1641F094ED10064686F /* MapViewController+StudentInformationDelegate.swift in Sources */,
 				6F28F3A31EFE87C200E2CAF5 /* StudentInformation.swift in Sources */,
 				6FD1C00A1F12961300AC6FB7 /* GradientView.swift in Sources */,
+				6F11AFF51F2905FD0008336E /* ListTableViewController+StudentInformationDelegate.swift in Sources */,
 				6F4CC4961EFFB73300FE7F44 /* StudentInformation+ParseClient.swift in Sources */,
 				6F2B1F5B1EFECD300025D327 /* Session.swift in Sources */,
 				6F3AB3F71F24B97900E7A64B /* OnTheMapTabBarController.swift in Sources */,

@@ -8,31 +8,11 @@
 
 import UIKit
 
-class ListTableViewController: UITableViewController, StudentInformationDelegate {
+class ListTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         setupStudentInformations()
-    }
-
-    func setupStudentInformations(andFetch shouldFetch: Bool = false) {
-        // show loading indicator
-        if !shouldFetch, let studentInformations = studentInformations {
-            print(studentInformations.count)
-        } else {
-            fetchStudentInformations {
-                switch $0 {
-                case .success:
-                    if let studentInformations = self.studentInformations {
-                        print(studentInformations.count)
-                        self.tableView.reloadData()
-                        // hide loading indicator
-                    }
-                case .failure(let error):
-                    print(error) // extract error handling (show error & hide loading indicator)
-                }
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
