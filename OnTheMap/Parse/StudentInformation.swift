@@ -17,6 +17,7 @@ struct StudentInformation {
     let mediaURL: String
     let latitude: Double
     let longitude: Double
+    let updatedAt: Date
 
     init(json: [String:AnyObject]) throws {
         guard let parseId = json[ParseConfig.StudentInformation.JSONProperties.objectId] as? String else {
@@ -48,7 +49,18 @@ struct StudentInformation {
         }
 
         guard let longitude = json[ParseConfig.StudentInformation.JSONProperties.longitude] as? Double else {
-            throw OnTheMapError.missingProperty("objectId")
+            throw OnTheMapError.missingProperty("longitude")
+        }
+
+        guard let updatedAtString = json[ParseConfig.StudentInformation.JSONProperties.updatedAt] as? String else {
+            throw OnTheMapError.missingProperty("updatedAt")
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+        guard let updatedAt = dateFormatter.date(from: updatedAtString) else {
+            throw OnTheMapError.couldNotParseJSON
         }
 
         self.parseId = parseId
@@ -59,6 +71,7 @@ struct StudentInformation {
         self.mediaURL = mediaURL
         self.latitude = latitude
         self.longitude = longitude
+        self.updatedAt = updatedAt
     }
 
     var fullName: String {
