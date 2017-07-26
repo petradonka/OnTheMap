@@ -249,6 +249,11 @@
                                 <action selector="handleLogoutTapped" destination="Fvc-Xp-kyk" id="XXX-nq-S43"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="YXd-dI-h6L">
+                            <connections>
+                                <action selector="handleRefreshTapped:" destination="Fvc-Xp-kyk" id="n0K-aG-lwc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="kbn-pW-Xxn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>

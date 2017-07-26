@@ -10,6 +10,20 @@ import UIKit
 
 class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
 
+    @IBAction func handleRefreshTapped(_ sender: Any) {
+        guard let selectedViewController = selectedViewController else {
+            print("No selected view controller in tab bar controller")
+            return
+        }
+
+        guard let selectedRefreshableViewController = selectedViewController as? Refreshable else {
+            print("View controller does not conform to protocol Refreshable")
+            return
+        }
+
+        selectedRefreshableViewController.refresh()
+    }
+
     @IBAction func handleLogoutTapped() {
         logout()
     }
