@@ -7,7 +7,7 @@
 //
 
 extension ListTableViewController: Refreshable {
-    func refresh() {
-        setupStudentInformations(andFetch: true)
+    func refresh(complete: @escaping () -> Void) {
+        setupStudentInformations(andFetch: true, complete: complete)
     }
 }

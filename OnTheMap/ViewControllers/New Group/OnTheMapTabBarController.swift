@@ -10,7 +10,16 @@ import UIKit
 
 class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
 
+    @IBOutlet var refreshButton: UIBarButtonItem!
+    @IBOutlet var logoutButton: UIBarButtonItem!
+
+    // MARK: - Refresh
+
     @IBAction func handleRefreshTapped(_ sender: Any) {
+        refreshSelectedVC()
+    }
+
+    private func refreshSelectedVC() {
         guard let selectedViewController = selectedViewController else {
             print("No selected view controller in tab bar controller")
             return
@@ -21,12 +30,28 @@ class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
             return
         }
 
-        selectedRefreshableViewController.refresh()
+        let activityIndicator = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        activityIndicator.startAnimating()
+        let activityIndicatorBarButtonItem = UIBarButtonItem.init(customView: activityIndicator)
+        let refreshBarButtonItem = navigationController?.navigationBar.topItem?.rightBarButtonItem
+
+        navigationController?.navigationBar.topItem?.rightBarButtonItem = activityIndicatorBarButtonItem
+        selectedRefreshableViewController.refresh() {
+            DispatchQueue.main.async {
+                self.navigationController?.navigationBar.topItem?.rightBarButtonItem = refreshBarButtonItem
+            }
+        }
     }
 
+    // MARK: - Logout
+
     @IBAction func handleLogoutTapped() {
+        logoutButton.isEnabled = false
+        refreshButton.isEnabled = false
         logout()
     }
+
+    // MARK: - LogoutDelegate
 
     func dismissAfterLogout() {
         guard let selectedViewController = selectedViewController else {
@@ -36,4 +61,5 @@ class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
 
         selectedViewController.performSegue(withIdentifier: "logoutSegue", sender: self)
     }
+
 }

@@ -9,33 +9,31 @@
 import Foundation
 
 extension MapViewController: StudentInformationDelegate {
-    func refreshStudentInformations() {
-        setupStudentInformations(andFetch: true) {}
+    func refreshStudentInformations(complete: @escaping () -> Void) {
+        setupStudentInformations(andFetch: true, complete: complete)
     }
 
     func setupStudentInformations() {
         setupStudentInformations(andFetch: false) {}
     }
 
-    func setupStudentInformations(andFetch shouldFetch: Bool, completion: @escaping () -> Void) {
-        // show loading indicator
+    func setupStudentInformations(andFetch shouldFetch: Bool, complete: @escaping () -> Void) {
         if !shouldFetch, let studentInformations = studentInformations {
-            print(studentInformations.count)
-            completion()
+            self.addStudentInformationsToMap(shouldClear: true, studentInformations: studentInformations)
+            complete()
         } else {
             fetchStudentInformations {
                 switch $0 {
                 case .success:
-                    if let studentInformations = self.studentInformations {
-                        print(studentInformations.count)
-                        // hide loading indicator
+                    if let studentInformations = self.studentInformations  {
                         DispatchQueue.main.async {
-                            self.addStudentInformationsToMap(studentInformations: studentInformations)
-                            completion()
+                            self.addStudentInformationsToMap(shouldClear: true, studentInformations: studentInformations)
+                            complete()
                         }
                     }
                 case .failure(let error):
-                    print(error) // extract error handling (show error & hide loading indicator)
+                    print(error) // extract error handling
+                    complete()
                 }
             }
         }

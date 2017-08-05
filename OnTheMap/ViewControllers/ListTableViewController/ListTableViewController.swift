@@ -10,9 +10,19 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomLayoutGuide.length, 0)
+        tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
-        setupStudentInformations()
+        setupStudentInformations() {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 
     // MARK: - Table view data source
