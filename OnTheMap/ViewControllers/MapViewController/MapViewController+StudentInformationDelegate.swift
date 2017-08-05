@@ -18,7 +18,8 @@ extension MapViewController: StudentInformationDelegate {
     }
 
     func setupStudentInformations(andFetch shouldFetch: Bool, complete: @escaping () -> Void) {
-        if !shouldFetch, (studentInformations != nil) {
+        if !shouldFetch, let studentInformations = studentInformations {
+            self.addStudentInformationsToMap(shouldClear: true, studentInformations: studentInformations)
             complete()
         } else {
             fetchStudentInformations {
@@ -26,7 +27,7 @@ extension MapViewController: StudentInformationDelegate {
                 case .success:
                     if let studentInformations = self.studentInformations  {
                         DispatchQueue.main.async {
-                            self.addStudentInformationsToMap(studentInformations: studentInformations)
+                            self.addStudentInformationsToMap(shouldClear: true, studentInformations: studentInformations)
                             complete()
                         }
                     }
