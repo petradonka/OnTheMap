@@ -267,6 +267,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="logoutButton" destination="xPN-qV-GVH" id="Fb1-M9-DyT"/>
+                        <outlet property="refreshButton" destination="YXd-dI-h6L" id="FaY-z4-viq"/>
                         <segue destination="Zbf-M3-xwn" kind="relationship" relationship="viewControllers" id="bPL-Yw-Rq8"/>
                         <segue destination="IMC-fg-Cez" kind="relationship" relationship="viewControllers" id="L57-23-Lsl"/>
                     </connections>

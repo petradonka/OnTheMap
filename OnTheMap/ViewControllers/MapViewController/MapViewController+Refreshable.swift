@@ -7,7 +7,7 @@
 //
 
 extension MapViewController: Refreshable {
-    func refresh() {
-        refreshStudentInformations()
+    func refresh(complete: @escaping () -> Void) {
+        refreshStudentInformations(complete: complete)
     }
 }

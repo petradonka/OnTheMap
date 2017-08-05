@@ -6,9 +6,11 @@
 //  Copyright © 2017 Petra Donka. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 extension ListTableViewController: StudentInformationDelegate {
+
     var studentInformations: [StudentInformation]? {
         get {
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -19,23 +21,22 @@ extension ListTableViewController: StudentInformationDelegate {
         }
     }
     
-    func setupStudentInformations(andFetch shouldFetch: Bool = false) {
-        // show loading indicator
-        if !shouldFetch, let studentInformations = studentInformations {
-            print(studentInformations.count)
+    func setupStudentInformations(andFetch shouldFetch: Bool = false, complete: @escaping () -> Void) {
+        if !shouldFetch, (studentInformations != nil) {
+            complete()
         } else {
             fetchStudentInformations {
                 switch $0 {
                 case .success:
-                    if let studentInformations = self.studentInformations {
-                        print(studentInformations.count)
-                        self.tableView.reloadData()
-                        // hide loading indicator
+                    if (self.studentInformations != nil) {
+                        complete()
                     }
                 case .failure(let error):
-                    print(error) // extract error handling (show error & hide loading indicator)
+                    print(error) // extract error handling
+                    complete()
                 }
             }
         }
     }
+
 }
