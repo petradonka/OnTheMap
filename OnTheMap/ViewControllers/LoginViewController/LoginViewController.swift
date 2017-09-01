@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, StudentInformationDelegate {
+class LoginViewController: KeyboardHideableViewController, StudentInformationDelegate, Scrollable {
 
     @IBOutlet var backgroundView: GradientView!
     @IBOutlet var usernameTextField: UITextField!
@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, StudentInformationDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var signupButton: UIButton!
     @IBOutlet var loadingActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet var scrollView: UIScrollView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
