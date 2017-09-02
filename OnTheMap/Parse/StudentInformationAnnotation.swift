@@ -17,7 +17,7 @@ class StudentInformationAnnotation: MKPointAnnotation {
 
         super.init()
 
-        coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude, longitude: studentInformation.longitude)
+        coordinate = CLLocationCoordinate2D(latitude: studentInformation.latitude ?? 0, longitude: studentInformation.longitude ?? 0)
         title = studentInformation.fullName
         subtitle = studentInformation.mediaURL
     }

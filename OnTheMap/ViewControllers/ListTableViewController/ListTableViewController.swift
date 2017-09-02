@@ -10,9 +10,15 @@ import UIKit
 
 class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
 
+    fileprivate var originalInsets = UIEdgeInsets.zero
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomLayoutGuide.length, 0)
+        originalInsets = tableView.contentInset
+        tableView.contentInset = UIEdgeInsetsMake(originalInsets.top,
+                                                  originalInsets.right,
+                                                  bottomLayoutGuide.length,
+                                                  originalInsets.left)
         tableView.scrollIndicatorInsets = tableView.contentInset
     }
 
@@ -54,10 +60,10 @@ class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
     }
 
     private func openStudentInformationURL(_ studentInformation: StudentInformation) {
-        if let url = URL.init(string: studentInformation.mediaURL) {
+        if let mediaURL = studentInformation.mediaURL, let url = URL.init(string: mediaURL) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
-            showErrorMessage("\(studentInformation.mediaURL) is not a URL")
+            showErrorMessage("Not a URL")
         }
     }
 }
