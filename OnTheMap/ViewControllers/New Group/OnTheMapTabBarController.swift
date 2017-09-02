@@ -12,6 +12,7 @@ class OnTheMapTabBarController: UITabBarController, ErrorHandlerDelegate, Logout
 
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet var logoutButton: UIBarButtonItem!
+    @IBOutlet var addPinButton: UIBarButtonItem!
 
     // MARK: - Refresh
 
