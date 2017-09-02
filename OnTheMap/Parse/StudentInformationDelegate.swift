@@ -18,11 +18,7 @@ protocol StudentInformationDelegate {
 extension StudentInformationDelegate {
     var studentInformations: [StudentInformation]? {
         get {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                return appDelegate.studentInformations
-            } else {
-                return nil
-            }
+            return StudentInformations.sharedInstance.studentInformations
         }
     }
 
@@ -31,10 +27,9 @@ extension StudentInformationDelegate {
             switch result {
             case .success(let studentInformations):
                 DispatchQueue.main.async {
-                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                        appDelegate.studentInformations = studentInformations
+                        StudentInformations.sharedInstance.studentInformations = studentInformations
                         completion(.success(nil))
-                    }
+
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

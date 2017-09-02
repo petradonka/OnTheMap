@@ -13,7 +13,7 @@ enum AddStudentInformationUIState {
     case waitingForLocationInput, findingLocation, findFailed, waitingForMediaInput, submitting, submitFailed
 }
 
-class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegate {
+class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var centerTextField: UITextField!
@@ -38,6 +38,9 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
             fatalError("No user, even though a new StudentInformation needs to be added")
         }
 
+        topTextField.delegate = self
+        centerTextField.delegate = self
+
         studentInformation = StudentInformation(udacityUserId: user.userId, firstName: user.firstName, lastName: user.lastName)
     }
 
@@ -45,6 +48,11 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
         super.viewDidAppear(animated)
 
         setUI(forState: .waitingForLocationInput)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func closeTapped(_ sender: Any) {

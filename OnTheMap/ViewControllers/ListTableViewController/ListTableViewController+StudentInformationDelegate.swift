@@ -13,11 +13,7 @@ extension ListTableViewController: StudentInformationDelegate {
 
     var studentInformations: [StudentInformation]? {
         get {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                return appDelegate.studentInformations?.sorted(by: { $0.updatedAt > $1.updatedAt })
-            } else {
-                return nil
-            }
+            return StudentInformations.sharedInstance.studentInformations.sorted(by: { $0.updatedAt > $1.updatedAt })
         }
     }
     

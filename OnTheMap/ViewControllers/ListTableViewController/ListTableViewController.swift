@@ -14,12 +14,6 @@ class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        originalInsets = tableView.contentInset
-        tableView.contentInset = UIEdgeInsetsMake(originalInsets.top,
-                                                  originalInsets.right,
-                                                  bottomLayoutGuide.length,
-                                                  originalInsets.left)
-        tableView.scrollIndicatorInsets = tableView.contentInset
     }
 
     override func viewDidAppear(_ animated: Bool) {

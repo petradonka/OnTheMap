@@ -8,6 +8,11 @@
 
 import Foundation
 
+class StudentInformations {
+    static let sharedInstance = StudentInformations()
+    var studentInformations: [StudentInformation] = []
+}
+
 struct StudentInformation {
     let parseId: String?
     let udacityUserId: String
