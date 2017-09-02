@@ -32,8 +32,10 @@ extension MapViewController: StudentInformationDelegate {
                         }
                     }
                 case .failure(let error):
-                    print(error) // extract error handling
-                    complete()
+                    DispatchQueue.main.async {
+                        self.handleError(error)
+                        complete()
+                    }
                 }
             }
         }

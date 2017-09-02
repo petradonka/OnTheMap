@@ -29,11 +29,15 @@ extension ListTableViewController: StudentInformationDelegate {
                 switch $0 {
                 case .success:
                     if (self.studentInformations != nil) {
-                        complete()
+                        DispatchQueue.main.async {
+                            complete()
+                        }
                     }
                 case .failure(let error):
-                    print(error) // extract error handling
-                    complete()
+                    DispatchQueue.main.async {
+                        self.handleError(error)
+                        complete()
+                    }
                 }
             }
         }

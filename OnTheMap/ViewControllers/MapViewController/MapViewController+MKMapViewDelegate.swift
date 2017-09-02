@@ -16,7 +16,8 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         guard let url = URL(string: annotation.studentInformation.mediaURL) else {
-            return // TODO: not a url, inform the user
+            showErrorMessage("\(annotation.studentInformation.mediaURL) is not a URL")
+            return
         }
 
         UIApplication.shared.open(url, options: [:], completionHandler: nil)

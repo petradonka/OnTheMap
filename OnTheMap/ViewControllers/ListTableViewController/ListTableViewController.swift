@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListTableViewController: UITableViewController {
+class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -57,8 +57,7 @@ class ListTableViewController: UITableViewController {
         if let url = URL.init(string: studentInformation.mediaURL) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
-            print("could not open URL", studentInformation.mediaURL)
-            // show user facing error
+            showErrorMessage("\(studentInformation.mediaURL) is not a URL")
         }
     }
 }

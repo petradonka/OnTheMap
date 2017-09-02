@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: KeyboardHideableViewController, StudentInformationDelegate, Scrollable {
+class LoginViewController: KeyboardHideableViewController, StudentInformationDelegate, Scrollable, ErrorHandlerDelegate {
 
     @IBOutlet var backgroundView: GradientView!
     @IBOutlet var usernameTextField: UITextField!
@@ -54,7 +54,6 @@ class LoginViewController: KeyboardHideableViewController, StudentInformationDel
         Session.session(forUsername: username, andPassword: password) { result in
             switch result {
             case .success(let session):
-                print(session)
                 User.user(withSession: session, completion: { (result) in
                     switch result {
                     case .success(let user):
@@ -65,13 +64,17 @@ class LoginViewController: KeyboardHideableViewController, StudentInformationDel
                             }
                         }
                     case .failure(let error):
-                        DispatchQueue.main.async { self.setUI(isLoggingIn: false) }
-                        print(error)
+                        DispatchQueue.main.async {
+                            self.setUI(isLoggingIn: false)
+                            self.handleError(error)
+                        }
                     }
                 })
             case .failure(let error):
-                DispatchQueue.main.async { self.setUI(isLoggingIn: false) }
-                print(error)
+                DispatchQueue.main.async {
+                    self.setUI(isLoggingIn: false)
+                    self.handleError(error)
+                }
             }
         }
     }
@@ -79,7 +82,6 @@ class LoginViewController: KeyboardHideableViewController, StudentInformationDel
     private func saveNewUser(_ user: User) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.user = user
-            print(user)
         }
     }
 
@@ -89,7 +91,7 @@ class LoginViewController: KeyboardHideableViewController, StudentInformationDel
             case .success:
                 self.performSegue(withIdentifier: "afterLoginSegue", sender: self)
             case .failure(let error):
-                print(error)
+                self.handleError(error)
             }
             complete()
         }
