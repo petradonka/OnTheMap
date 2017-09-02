@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
+class OnTheMapTabBarController: UITabBarController, ErrorHandlerDelegate, LogoutDelegate {
 
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet var logoutButton: UIBarButtonItem!
@@ -26,7 +26,7 @@ class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
         }
 
         guard let selectedRefreshableViewController = selectedViewController as? Refreshable else {
-            print("View controller does not conform to protocol Refreshable")
+            print("View controller is not Refreshable")
             return
         }
 
@@ -48,7 +48,7 @@ class OnTheMapTabBarController: UITabBarController, LogoutDelegate {
     @IBAction func handleLogoutTapped() {
         logoutButton.isEnabled = false
         refreshButton.isEnabled = false
-        logout()
+        logout(complete: dismissAfterLogout)
     }
 
     // MARK: - LogoutDelegate
