@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OnTheMap/ViewControllers/ListTableViewController/ListTableViewController.swift"
-            timestampString = "526036752.523836"
+            timestampString = "526056436.991719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "openStudentInformationURL(_:)"
             landmarkType = "7">
          </BreakpointContent>

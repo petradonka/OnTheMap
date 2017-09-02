@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 enum AddStudentInformationUIState {
-    case waitingForLocationInput, findingLocation, waitingForMediaInput, submitting
+    case waitingForLocationInput, findingLocation, findFailed, waitingForMediaInput, submitting, submitFailed
 }
 
 class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegate {
@@ -54,11 +54,17 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
     }
 
     @IBAction func findTapped(_ sender: Any) {
+        guard let address = centerTextField.text, address.characters.count > 0 else {
+            showErrorMessage("You forgot to add your location")
+            return
+        }
+
         setUI(forState: .findingLocation)
-        studentInformation.mapString = centerTextField.text ?? ""
-        findCoordinatesForAddress(studentInformation.mapString!) { location in
+        studentInformation.mapString = address
+        findCoordinatesForAddress(address) { location in
             guard let location = location else {
                 print("No location")
+                self.setUI(forState: .findFailed)
                 return
             }
             self.studentInformation.latitude = location.coordinate.latitude
@@ -85,6 +91,7 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
+                    self.setUI(forState: .submitFailed)
                     self.handleError(error)
                 }
             }
@@ -122,6 +129,13 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
                 activityIndicator.startAnimating()
             }
 
+        case .findFailed:
+            centerTextField.isEnabled = true
+            findButton.isEnabled = true
+            if (activityIndicator.isAnimating) {
+                activityIndicator.stopAnimating()
+            }
+
         case .waitingForMediaInput:
             findButton.isEnabled = false
 
@@ -149,6 +163,13 @@ class AddStudentInformationViewController: UIViewController, ErrorHandlerDelegat
             if (!activityIndicator.isAnimating) {
                 activityIndicator.activityIndicatorViewStyle = .gray
                 activityIndicator.startAnimating()
+            }
+
+        case .submitFailed:
+            topTextField.isEnabled = true
+            submitButton.isEnabled = true
+            if (activityIndicator.isAnimating) {
+                activityIndicator.stopAnimating()
             }
         }
     }
