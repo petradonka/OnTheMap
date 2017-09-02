@@ -28,6 +28,7 @@
 		6F46A1661F0ACB030064686F /* StudentInformationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F46A1651F0ACB030064686F /* StudentInformationAnnotation.swift */; };
 		6F4CC4961EFFB73300FE7F44 /* StudentInformation+ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CC4951EFFB73300FE7F44 /* StudentInformation+ParseClient.swift */; };
 		6F4CC4981EFFC60F00FE7F44 /* OnTheMapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */; };
+		6F877E111F5AE47600D70E5A /* AddStudentInformationViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F877E101F5AE47600D70E5A /* AddStudentInformationViewController+MKMapViewDelegate.swift */; };
 		6FB8F36F1EF86A9D008888F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8F36E1EF86A9D008888F6 /* AppDelegate.swift */; };
 		6FB8F3741EF86A9D008888F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FB8F3721EF86A9D008888F6 /* Main.storyboard */; };
 		6FB8F3761EF86A9D008888F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FB8F3751EF86A9D008888F6 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		6F46A1651F0ACB030064686F /* StudentInformationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationAnnotation.swift; sourceTree = "<group>"; };
 		6F4CC4951EFFB73300FE7F44 /* StudentInformation+ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudentInformation+ParseClient.swift"; sourceTree = "<group>"; };
 		6F4CC4971EFFC60F00FE7F44 /* OnTheMapError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapError.swift; sourceTree = "<group>"; };
+		6F877E101F5AE47600D70E5A /* AddStudentInformationViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddStudentInformationViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		6FB8F36B1EF86A9D008888F6 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FB8F36E1EF86A9D008888F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6FB8F3731EF86A9D008888F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				6F27B45F1F5AC32600718C69 /* AddStudentInformationViewController.swift */,
+				6F877E101F5AE47600D70E5A /* AddStudentInformationViewController+MKMapViewDelegate.swift */,
 			);
 			path = AddStudentInformationViewController;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				6FBC28B61F0918D2002BE193 /* LoginViewController.swift in Sources */,
 				6F2B1F5D1EFECDB90025D327 /* UdacityConfig.swift in Sources */,
 				6FBC28BB1F093C10002BE193 /* MapViewController.swift in Sources */,
+				6F877E111F5AE47600D70E5A /* AddStudentInformationViewController+MKMapViewDelegate.swift in Sources */,
 				6FFD9ADA1F52D9EF00C70CE6 /* Scrollable.swift in Sources */,
 				6F3AB3F11F24B0BF00E7A64B /* LogoutDelegate.swift in Sources */,
 			);

@@ -188,7 +188,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MEh-Sm-r8D">
                                 <rect key="frame" x="0.0" y="171.5" width="320" height="312.5"/>
                             </mapView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v99-jt-ueb">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v99-jt-ueb">
                                 <rect key="frame" x="0.0" y="171.5" width="320" height="312.5"/>
                                 <color key="backgroundColor" red="0.66666666669999997" green="0.4941176471" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -223,7 +223,7 @@
                                     <action selector="findTapped:" destination="LvN-O8-ONe" eventType="touchUpInside" id="RpL-RF-rj7"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Where are you studying today?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="waT-PU-uIQ">
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Tap to add a URL" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="waT-PU-uIQ">
                                 <rect key="frame" x="0.0" y="58" width="320" height="113.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <attributedString key="attributedText">

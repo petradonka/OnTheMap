@@ -104,7 +104,7 @@ extension StudentInformation {
         }
     }
 
-    fileprivate func send(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
+    func send(completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         let body = toJSON()
 
         if let url = ParseClient.urlForClass(ParseConfig.StudentInformation.ClassName) {
@@ -134,7 +134,8 @@ extension StudentInformation {
     fileprivate func update(existingLocation: StudentInformation, completion: @escaping (Result<Void?, OnTheMapError>) -> Void) {
         let body = toJSON()
 
-        if let url = ParseClient.urlForClass(ParseConfig.StudentInformation.ClassName) {
+        if let url = ParseClient.urlForClass(ParseConfig.StudentInformation.ClassName),
+            let parseId = parseId {
             var newUrl = URLComponents(url: url, resolvingAgainstBaseURL: false)
             newUrl?.path.append("/\(parseId)")
 
@@ -156,6 +157,8 @@ extension StudentInformation {
                     }
                 }
             }
+        } else {
+            print("no parseID?")
         }
     }
 }

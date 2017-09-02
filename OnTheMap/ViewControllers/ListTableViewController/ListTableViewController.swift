@@ -54,10 +54,10 @@ class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
     }
 
     private func openStudentInformationURL(_ studentInformation: StudentInformation) {
-        if let url = URL.init(string: studentInformation.mediaURL) {
+        if let mediaURL = studentInformation.mediaURL, let url = URL.init(string: mediaURL) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
-            showErrorMessage("\(studentInformation.mediaURL) is not a URL")
+            showErrorMessage("Not a URL")
         }
     }
 }

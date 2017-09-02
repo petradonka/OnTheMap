@@ -9,14 +9,14 @@
 import Foundation
 
 struct StudentInformation {
-    let parseId: String
+    let parseId: String?
     let udacityUserId: String
     let firstName: String
     let lastName: String
-    let mapString: String
-    let mediaURL: String
-    let latitude: Double
-    let longitude: Double
+    var mapString: String?
+    var mediaURL: String?
+    var latitude: Double?
+    var longitude: Double?
     let updatedAt: Date
 
     init(json: [String:AnyObject]) throws {
@@ -74,6 +74,19 @@ struct StudentInformation {
         self.updatedAt = updatedAt
     }
 
+    init(udacityUserId: String, firstName: String, lastName: String) {
+        self.udacityUserId = udacityUserId
+        self.firstName = firstName
+        self.lastName = lastName
+
+        self.updatedAt = Date()
+        self.parseId = nil
+        self.mapString = nil
+        self.latitude = nil
+        self.longitude = nil
+        self.mediaURL = nil
+    }
+
     var fullName: String {
         get {
             return "\(firstName) \(lastName)"
@@ -81,14 +94,23 @@ struct StudentInformation {
     }
 
     func toJSON() -> [String : Any] {
-        return [
-            ParseConfig.StudentInformation.JSONProperties.uniqueKey: udacityUserId,
-            ParseConfig.StudentInformation.JSONProperties.firstName: firstName,
-            ParseConfig.StudentInformation.JSONProperties.lastName: lastName,
-            ParseConfig.StudentInformation.JSONProperties.mapString: mapString,
-            ParseConfig.StudentInformation.JSONProperties.mediaURL: mediaURL,
-            ParseConfig.StudentInformation.JSONProperties.latitude: latitude,
-            ParseConfig.StudentInformation.JSONProperties.longitude: longitude
-            ] as [String : Any]
+        var base = [ParseConfig.StudentInformation.JSONProperties.uniqueKey: udacityUserId,
+                    ParseConfig.StudentInformation.JSONProperties.firstName: firstName,
+                    ParseConfig.StudentInformation.JSONProperties.lastName: lastName] as [String : Any]
+
+        if let mapString = mapString {
+            base[ParseConfig.StudentInformation.JSONProperties.mapString] = mapString
+        }
+
+        if let mediaURL = mediaURL {
+            base[ParseConfig.StudentInformation.JSONProperties.mediaURL] = mediaURL
+        }
+
+        if let latitude = latitude, let longitude = longitude {
+            base[ParseConfig.StudentInformation.JSONProperties.latitude] = latitude
+            base[ParseConfig.StudentInformation.JSONProperties.longitude] = longitude
+        }
+
+        return base
     }
 }
