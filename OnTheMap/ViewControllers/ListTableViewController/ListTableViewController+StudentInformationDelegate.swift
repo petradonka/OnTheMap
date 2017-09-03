@@ -10,12 +10,6 @@ import Foundation
 import UIKit
 
 extension ListTableViewController: StudentInformationDelegate {
-
-    var studentInformations: [StudentInformation]? {
-        get {
-            return StudentInformations.sharedInstance.studentInformations.sorted(by: { $0.updatedAt > $1.updatedAt })
-        }
-    }
     
     func setupStudentInformations(andFetch shouldFetch: Bool = false, complete: @escaping () -> Void) {
         if !shouldFetch, (studentInformations != nil) {

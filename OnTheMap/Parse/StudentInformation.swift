@@ -10,7 +10,14 @@ import Foundation
 
 class StudentInformations {
     static let sharedInstance = StudentInformations()
+
     var studentInformations: [StudentInformation] = []
+
+    var sortedStudentInformations: [StudentInformation] {
+        get {
+            return studentInformations.sorted(by: { $0.updatedAt > $1.updatedAt })
+        }
+    }
 }
 
 struct StudentInformation {

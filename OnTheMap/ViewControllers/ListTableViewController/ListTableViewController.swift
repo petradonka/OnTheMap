@@ -12,10 +12,6 @@ class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
 
     fileprivate var originalInsets = UIEdgeInsets.zero
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         setupStudentInformations() {
@@ -32,23 +28,21 @@ class ListTableViewController: UITableViewController, ErrorHandlerDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentInformations?.count ?? 0
+        return StudentInformations.sharedInstance.sortedStudentInformations.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentInformationCell", for: indexPath)
 
-        if let studentInformation = studentInformations?[indexPath.row] {
-            cell.textLabel?.text = studentInformation.fullName
-        }
+        let studentInformation = StudentInformations.sharedInstance.sortedStudentInformations[indexPath.row]
+        cell.textLabel?.text = studentInformation.fullName
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let studentInformation = studentInformations?[indexPath.row] {
-            openStudentInformationURL(studentInformation)
-        }
+        let studentInformation = StudentInformations.sharedInstance.sortedStudentInformations[indexPath.row]
+        openStudentInformationURL(studentInformation)
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
